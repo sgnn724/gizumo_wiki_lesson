@@ -1,0 +1,69 @@
+{
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "babel-eslint"
+  },
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base",
+    "plugin:vue/recommended"
+  ],
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "map": [
+          ["@Helpers", "./src/js/_helpers"],
+          ["@Components", "./src/js/components"],
+          ["@Pages", "./src/js/pages"]
+        ],
+        "extensions": [".vue", ".js", ".json", ".css"]
+      }
+    }
+  },
+  "globals": {
+    "API_BASE_URL": true,
+    "MY_SESSION_STORAGE_KEY": true
+  },
+  "rules": {
+    "no-new": "off",
+    "no-console": "warn",
+    "no-control-regex": "off",
+    "max-len": ["error", {
+      "code": 90,
+      "ignoreComments": true,
+      "ignoreTrailingComments": true,
+      "ignoreTemplateLiterals": true,
+      "ignoreUrls": true
+    }],
+    "no-irregular-whitespace": [
+      "error",
+      {
+        "skipTemplates": true,
+        "skipStrings": true
+      }
+    ],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["state"]
+      }
+    ],
+    "import/no-named-as-default": "off",
+    "import/no-extraneous-dependencies": "off",
+    "vue/singleline-html-element-content-newline": "off",
+    "vue/max-attributes-per-line": [
+      "error",
+      {
+        "singleline": 3,
+        "multiline": {
+          "max": 1
+        }
+      }
+    ]
+  }
+}
