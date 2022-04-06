@@ -14,6 +14,10 @@ import ArticleDetail from '@Pages/Articles/Detail';
 import ArticleEdit from '@Pages/Articles/Edit';
 import ArticlePost from '@Pages/Articles/Post';
 
+// カテゴリー
+import Categories from '@Pages/Categories';
+import CategoryList from '@Pages/Categories/List';
+
 // 自分のアカウントページ
 import Profile from '@Pages/Profile';
 
@@ -104,6 +108,17 @@ const router = new VueRouter({
           name: 'articleEdit',
           path: ':id/edit',
           component: ArticleEdit,
+        },
+      ],
+    },
+    {
+      path: '/categories',
+      component: Categories,
+      children: [
+        {
+          name: 'categoryList',
+          path: '',
+          component: CategoryList,
         },
       ],
     },
