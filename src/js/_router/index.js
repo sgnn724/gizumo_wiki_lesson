@@ -16,7 +16,7 @@ import ArticlePost from '@Pages/Articles/Post';
 
 // カテゴリー
 import Categories from '@Pages/Categories';
-import CategoryList from '@Pages/Categories/List';
+import CategoryManagement from '@Pages/Categories/Management';
 
 // 自分のアカウントページ
 import Profile from '@Pages/Profile';
@@ -116,9 +116,9 @@ const router = new VueRouter({
       component: Categories,
       children: [
         {
-          name: 'categoryList',
+          name: 'categoryManagement',
           path: '',
-          component: CategoryList,
+          component: CategoryManagement,
         },
       ],
     },
