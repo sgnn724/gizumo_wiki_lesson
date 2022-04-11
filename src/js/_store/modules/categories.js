@@ -67,8 +67,8 @@ export default {
         name: payload.name,
       });
     },
-    displayDoneMessage(state, payload = { message: '成功しました' }) {
-      state.doneMessage = payload.message;
+    displayDoneMessage(state, message = '成功しました') {
+      state.doneMessage = message;
     },
     failRequest(state, { message }) {
       state.errorMessage = message;
@@ -113,7 +113,7 @@ export default {
           data,
         }).then(() => {
           commit('toggleLoading');
-          commit('displayDoneMessage', { message: 'カテゴリーを作成しました' });
+          commit('displayDoneMessage', 'カテゴリーを作成しました');
           resolve();
         }).catch((err) => {
           commit('toggleLoading');
