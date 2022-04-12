@@ -17,6 +17,7 @@ import ArticlePost from '@Pages/Articles/Post';
 // カテゴリー
 import Categories from '@Pages/Categories';
 import CategoryManagement from '@Pages/Categories/Management';
+import CategoryDetail from '@Pages/Categories/Detail';
 
 // 自分のアカウントページ
 import Profile from '@Pages/Profile';
@@ -129,6 +130,11 @@ const router = new VueRouter({
               next();
             }
           },
+        },
+        {
+          name: 'categoryDetail',
+          path: ':id',
+          component: CategoryDetail,
         },
       ],
     },
