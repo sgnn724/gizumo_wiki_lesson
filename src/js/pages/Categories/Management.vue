@@ -16,7 +16,7 @@
       :theads="theads"
       :categories="categoriesList"
       :access="access"
-      :deleteCategoryName="deleteCategoryName"
+      :delete-category-name="deleteCategoryName"
       border-gray
       class="categories-list"
       @openModal="openModal"
