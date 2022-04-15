@@ -13,13 +13,11 @@
 
 <script>
 import { CategoryDetail } from '@Components/molecules';
-import Mixins from '@Helpers/mixins';
 
 export default {
   components: {
     appCategoryDetail: CategoryDetail,
   },
-  mixins: [Mixins],
   computed: {
     category() {
       return this.$store.state.categories.targetCategory;
