@@ -151,11 +151,11 @@ export default {
           },
         };
         commit('updateCategory', payload);
-        commit('toggleLoading');
         commit('displayDoneMessage', 'カテゴリーを更新しました');
-      }).catch((err) => {
         commit('toggleLoading');
+      }).catch((err) => {
         commit('failRequest', { message: err.message });
+        commit('toggleLoading');
       });
     },
     postCategory({ commit, rootGetters }) {
