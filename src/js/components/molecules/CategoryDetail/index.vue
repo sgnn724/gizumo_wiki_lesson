@@ -17,7 +17,7 @@
       placeholder="カテゴリー名"
       data-vv-as="カテゴリー名"
       :error-messages="errors.collect('name')"
-      :value="category.name"
+      :value="categoryName"
       @updateValue="updateValue"
     />
     <app-button
@@ -52,9 +52,9 @@ export default {
     appRouterLink: RouterLink,
   },
   props: {
-    category: {
-      type: Object,
-      default: () => ({}),
+    categoryName: {
+      type: String,
+      default: '',
     },
     errorMessage: {
       type: String,

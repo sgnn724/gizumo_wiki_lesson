@@ -1,6 +1,6 @@
 <template lang="html">
   <app-category-detail
-    :category="category"
+    :category-name="categoryName"
     :error-message="errorMessage"
     :done-message="doneMessage"
     :loading="loading"
@@ -19,8 +19,8 @@ export default {
     appCategoryDetail: CategoryDetail,
   },
   computed: {
-    category() {
-      return this.$store.state.categories.targetCategory;
+    categoryName() {
+      return this.$store.state.categories.targetCategory.name;
     },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
@@ -52,10 +52,7 @@ export default {
     },
     handleSubmit() {
       if (this.loading) return;
-      this.$store.dispatch('categories/updateCategory', {
-        id: this.category.id,
-        name: this.category.name,
-      });
+      this.$store.dispatch('categories/updateCategory');
     },
   },
 };
