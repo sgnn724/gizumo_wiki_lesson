@@ -51,6 +51,7 @@ export default {
       if (!this.loading) this.$store.dispatch('categories/updateValue', target.value);
     },
     handleSubmit() {
+      if (this.loading) return;
       this.$store.dispatch('categories/updateCategory', {
         id: this.category.id,
         name: this.category.name,

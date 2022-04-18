@@ -24,7 +24,7 @@
       class="category-detail__submit"
       button-type="submit"
       round
-      :disabled="disabled || !access.edit"
+      :disabled="!disabled"
     >
       {{ buttonText }}
     </app-button>
@@ -64,7 +64,7 @@ export default {
       type: String,
       default: '',
     },
-    disabled: {
+    loading: {
       type: Boolean,
       default: false,
     },
@@ -76,7 +76,10 @@ export default {
   computed: {
     buttonText() {
       if (!this.access.edit) return '変更権限がありません';
-      return this.disabled ? '更新中...' : '更新';
+      return this.loading ? '更新中...' : '更新';
+    },
+    disabled() {
+      return this.access.edit && !this.loading;
     },
   },
   methods: {
