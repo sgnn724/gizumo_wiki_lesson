@@ -66,10 +66,16 @@ export default {
     doneGetAllCategories(state, { categories }) {
       state.categoryList = [...categories].reverse();
     },
+    doneGetCategory(state, payload) {
+      state.targetCategory = Object.assign({}, state.targetCategory, payload.category);
+    },
     updateValue(state, payload) {
       state.targetCategory = Object.assign({}, { ...state.targetCategory }, {
         name: payload.name,
       });
+    },
+    updateCategory(state, { category }) {
+      state.targetCategory = Object.assign({}, state.targetCategory, { ...category });
     },
     displayDoneMessage(state, message = '成功しました') {
       state.doneMessage = message;
@@ -107,10 +113,49 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
+    getCategoryDetail({ commit, rootGetters }, { id }) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${id}`,
+      }).then((res) => {
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('doneGetCategory', payload);
+      }).catch((err) => {
+        commit('failRequest', { message: err.message });
+      });
+    },
     updateValue({ commit }, name) {
       commit({
         type: 'updateValue',
         name,
+      });
+    },
+    updateCategory({ commit, rootGetters, state }) {
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('name', state.targetCategory.name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${state.targetCategory.id}`,
+        data,
+      }).then((res) => {
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('updateCategory', payload);
+        commit('displayDoneMessage', 'カテゴリーを更新しました');
+        commit('toggleLoading');
+      }).catch((err) => {
+        commit('failRequest', { message: err.message });
+        commit('toggleLoading');
       });
     },
     postCategory({ commit, rootGetters }) {
