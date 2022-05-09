@@ -1,5 +1,6 @@
 <template>
   <div class="category-list">
+        <h1 theme-color bold class="category-list__title">カテゴリー一覧</h1>
     <table class="category-list__table">
       <thead class="category-list__table__head">
         <tr>
@@ -134,6 +135,13 @@ export default {
   padding: 10px 0 20px;
   height: 100%;
   overflow: scroll;
+  &__title {
+      color: #17abe6;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 5px 10px;
+      vertical-align: middle;
+  }
   &__table {
     width: 100%;
     text-align: left;

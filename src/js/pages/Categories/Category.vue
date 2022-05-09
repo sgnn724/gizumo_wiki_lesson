@@ -4,11 +4,10 @@
       :category="category"
       :access="access"
       class="category-post"
-      @handleSubmit="handleSubmit"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       class="category-list"
-      :theads="theads"
       :categories="categoryList"
       :access="access"
       @openModal="openModal"
@@ -18,7 +17,6 @@
 
 <script>
 import { CategoryPost, CategoryList } from '@Components/molecules';
-
 import Mixins from '@Helpers/mixins';
 
 export default {
@@ -33,7 +31,8 @@ export default {
   },
   data() {
     return {
-      theads: ['カテゴリー一覧'],
+      name: '',
+      
     };
   },
   computed: {
@@ -44,21 +43,24 @@ export default {
       return this.$store.getters['auth/access'];
     },
     category() {
-      const { category } = this.$store.state.categories.targetCategory;
-      return category;
+      const { name } = this.$store.state.categories.targetCategory;
+      return name;
     },
   },
   created() {
-    this.$store.dispatch('categories/getAllCategories');
+    this.getAllCategories();
   },
   methods: {
     handleSubmit() {
-      this.$store.dispatch('categories/addCategory');
+      this.$store.dispatch('categories/postCategory');
     },
     openModal(categoryId, categoryName) {
       this.$store.dispatch('categories/confirmDeleteCategory', categoryId, categoryName);
       this.toggleModal();
     },
+    getAllCategories() {
+      this.$store.dispatch('categories/getAllCategories');
+    }
   },
 };
 </script>
@@ -76,3 +78,4 @@ export default {
   }
 }
 </style>
+

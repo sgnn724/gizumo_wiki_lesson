@@ -15,7 +15,7 @@ import ArticleEdit from '@Pages/Articles/Edit';
 import ArticlePost from '@Pages/Articles/Post';
 
 import Categories from '@Pages/Categories';
-import CategoryList from '@Pages/Categories/List';
+import Category from '@Pages/Categories/Category';
 
 
 // 自分のアカウントページ
@@ -32,8 +32,6 @@ import PasswordInit from '@Pages/Password/init';
 import PasswordUpdate from '@Pages/Password/update';
 
 import Store from '../_store';
-// import { categories } from '../_store/modules';
-// import { from } from 'core-js/fn/array';
 
 Vue.use(VueRouter);
 const router = new VueRouter({
@@ -78,15 +76,16 @@ const router = new VueRouter({
       component: Categories,
       children: [
         {
-          name: 'categoryList',
+          name: 'category',
           path: '',
-          component: CategoryList,
+          component: Category,
           beforeEnter(to, from, next) {
             const isCategory = from.name ? from.name.indexOf('category') >= 0 : false;
             const isRedirect = to.query.redirect;
             if (isCategory && isRedirect) {
               next();
             } else {
+              Store.dispatch('categories/clearMessage');
               next();
             }
           },
