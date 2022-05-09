@@ -68,11 +68,11 @@ export default {
   &-post {
     width: 35%;
     padding-right: 20px;
-    border-right: 0.1px solid ;
+    border-right: 1px solid;
   }
   &-list {
     width: 65%;
-    margin-left: 20px;
+    padding-left: 20px;
   }
 }
 </style>
