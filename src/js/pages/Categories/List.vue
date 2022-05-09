@@ -39,28 +39,6 @@ export default {
     this.fetchCategories();
   },
   methods: {
-    openModal(articleId) {
-      this.$store.dispatch('articles/confirmDeleteArticle', articleId);
-      this.toggleModal();
-    },
-    handleClick() {
-      this.$store.dispatch('articles/deleteArticle');
-      this.toggleModal();
-      if (this.$route.query.category) {
-        const { category } = this.$route.query;
-        this.title = category;
-        this.$store.dispatch('articles/filteredArticles', category)
-          .then(() => {
-            if (this.$store.state.articles.articleList.length === 0) {
-              this.$router.push({ path: '/notfound' });
-            }
-          }).catch(() => {
-            // console.log(err);
-          });
-      } else {
-        this.$store.dispatch('articles/getAllArticles');
-      }
-    },
     fetchCategories() {
       this.$store.dispatch('categories/getAllCategories');
     },
