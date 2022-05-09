@@ -15,7 +15,6 @@
     @handleSubmit="handleSubmit"
   />
 </template>
-
 <script>
 import { ArticleEdit } from '@Components/molecules';
 

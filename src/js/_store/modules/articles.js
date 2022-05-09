@@ -4,6 +4,7 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
+    title: '',
     targetArticle: {
       id: null,
       title: '',
