@@ -4,10 +4,14 @@ export default {
   namespaced: true,
   state: {
     categoriesList: [],
+    errorMessage: '',
   },
   mutations: {
     doneGetAllCategories(state, payload) {
       state.categoriesList = [...payload.categories];
+    },
+    failRequest(state, { message }) {
+      state.errorMessage = message;
     },
   },
   actions: {
@@ -20,6 +24,8 @@ export default {
           categories: res.data.categories,
         };
         commit('doneGetAllCategories', payload);
+      }).catch((err) => {
+        commit('failRequest', { message: err.message });
       });
     },
   },

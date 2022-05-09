@@ -125,7 +125,6 @@ export default {
       if (!this.access.delete) return;
       this.$emit('handleClick');
     },
-
   },
 };
 </script>

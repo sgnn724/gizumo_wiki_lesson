@@ -3,8 +3,8 @@
     <app-category-post
       class="categoryPost"
       :access="access"
+      :error-message="errorMessage"
     />
-    <div class="line" />
     <app-category-list
       class="categoryList"
       :categories="category"
@@ -34,6 +34,9 @@ export default {
     access() {
       return this.$store.getters['auth/access'];
     },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
   },
   created() {
     this.fetchCategories();
@@ -53,17 +56,12 @@ export default {
 
 .categoryPost {
   width: 37.5%;
-  margin-right: 1rem;
-}
-
-.line {
-  margin: 0 1rem;
-  width: 1px;
-  background-color: #C0C0C0;
+  margin-right: 2rem;
 }
 
 .categoryList {
+  border-left: 1px solid #C0C0C0;
   width: 62.5%;
-  margin-left: 1rem;
+  padding-left: 2rem;
 }
 </style>

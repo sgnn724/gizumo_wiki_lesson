@@ -16,7 +16,7 @@ console.log('==================================================');
 
 const src = path.resolve(__dirname, './src');
 const dist = path.resolve(__dirname, './public');
-  
+
 const config = {
   mode: nodeEnv,
   devtool: isDev ? 'source-map' : 'eval',
