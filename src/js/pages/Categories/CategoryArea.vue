@@ -10,7 +10,7 @@
       class="category-list"
       :categories="categoryList"
       :access="access"
-      @openModal="openModal"
+      @open-modal="openModal"
     />
   </div>
 </template>
@@ -31,8 +31,7 @@ export default {
   },
   data() {
     return {
-      name: '',
-      
+      name: '', 
     };
   },
   computed: {

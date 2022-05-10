@@ -8,11 +8,6 @@ export default {
     targetCategory: {
       id: null,
       name: '',
-      article: {
-        id: null,
-        title: '',
-        content: '',
-      },
     },
     doneMessage: '',
     errorMessage: '',
