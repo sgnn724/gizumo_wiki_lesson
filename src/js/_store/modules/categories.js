@@ -8,12 +8,8 @@ export default {
     targetCategory: {
       id: null,
       name: '',
-      article: {
-        id: null,
-        title: '',
-        content: '',
-      },
     },
+    loading: false,
     doneMessage: '',
     errorMessage: '',
     categoryId: null,
@@ -40,6 +36,10 @@ export default {
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
+    },
+    clearMessage(state) {
+      state.doneMessage = '';
+      state.errorMessage = '';
     },
   },
   actions: {

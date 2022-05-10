@@ -1,6 +1,7 @@
 <template lang="html">
   <div class="category">
     <app-category-post
+      :loading="loading"
       :category="category"
       :access="access"
       class="category-post"
@@ -10,11 +11,10 @@
       class="category-list"
       :categories="categoryList"
       :access="access"
-      @openModal="openModal"
+      @open-modal="openModal"
     />
   </div>
 </template>
-
 <script>
 import { CategoryPost, CategoryList } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
@@ -32,12 +32,14 @@ export default {
   data() {
     return {
       name: '',
-      
     };
   },
   computed: {
     categoryList() {
       return this.$store.state.categories.categoryList;
+    },
+    loading() {
+      return this.$store.state.categories.loading;
     },
     access() {
       return this.$store.getters['auth/access'];
@@ -52,7 +54,13 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.$store.dispatch('categories/postCategory');
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory').then(() => {
+        this.$router.push({
+          path: '/categories',
+          query: { redirect: '/category/post' },
+        });
+      });
     },
     openModal(categoryId, categoryName) {
       this.$store.dispatch('categories/confirmDeleteCategory', categoryId, categoryName);

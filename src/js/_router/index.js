@@ -15,8 +15,7 @@ import ArticleEdit from '@Pages/Articles/Edit';
 import ArticlePost from '@Pages/Articles/Post';
 
 import Categories from '@Pages/Categories';
-import Category from '@Pages/Categories/Category';
-
+import CategoryArea from '@Pages/Categories/CategoryArea';
 
 // 自分のアカウントページ
 import Profile from '@Pages/Profile';
@@ -76,9 +75,9 @@ const router = new VueRouter({
       component: Categories,
       children: [
         {
-          name: 'category',
+          name: 'categoryArea',
           path: '',
-          component: Category,
+          component: CategoryArea,
           beforeEnter(to, from, next) {
             const isCategory = from.name ? from.name.indexOf('category') >= 0 : false;
             const isRedirect = to.query.redirect;
