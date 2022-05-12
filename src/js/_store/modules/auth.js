@@ -110,7 +110,6 @@ export default {
           data,
         }).then((response) => {
           if (!response.data.token) reject(new Error());
-
           return axios(response.data.token)({
             method: 'GET',
             url: '/me',
