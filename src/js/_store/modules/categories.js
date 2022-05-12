@@ -40,10 +40,8 @@ export default {
     },
     initPostCategory(state) {
       state.inputCategory = Object.assign({}, {
-        inputCategory: {
-          id: null,
-          name: '',
-        },
+        id: null,
+        name: '',
       });
     },
   },
