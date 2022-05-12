@@ -5,19 +5,13 @@ export default {
   state: {
     categoryList: [],
     category: {
-      id: null,
       name: '',
     },
     loading: false,
     doneMessage: '',
     errorMessage: '',
-    categoryId: null,
-    categoryName: '',
   },
   getters: {
-    targetCategory: state => state.targetCategory,
-    categoryId: state => state.categoryId,
-    categoryName: state => state.categoryName,
     category: state => state.category,
   },
   mutations: {
@@ -40,7 +34,7 @@ export default {
       state.categoryId = categoryId;
       state.categoryName = categoryName;
     },
-    displayDoneMessage(state, payload = { message: '成功しました' }) {
+    displayDoneMessage(state, payload) {
       state.doneMessage = payload.message;
     },
     clearMessage(state) {
@@ -69,7 +63,7 @@ export default {
       });
     },
     postCategory({ commit, rootGetters }) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         commit('toggleLoading');
         commit('clearMessage');
         const data = new URLSearchParams();
@@ -85,7 +79,6 @@ export default {
         }).catch((err) => {
           commit('toggleLoading');
           commit('failRequest', { message: err.message });
-          reject();
         });
       });
     },

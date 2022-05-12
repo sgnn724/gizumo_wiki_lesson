@@ -120,11 +120,11 @@ export default {
   methods: {
     openModal(categoryId, categoryName) {
       if (!this.access.delete) return;
-      this.$emit('openModal', categoryId, categoryName);
+      this.$emit('open-modal', categoryId, categoryName);
     },
     handleClick() {
       if (!this.access.delete) return;
-      this.$emit('handleClick');
+      this.$emit('handle-click');
     },
   },
 };
