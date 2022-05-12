@@ -15,6 +15,7 @@
       </thead>
       <transition-group name="fade" tag="tbody" class="category-list__table__body">
         <tr v-for="category in categories" :key="category.id">
+          <!-- console.log(category.id); -->
           <td>
             <app-text tag="span">
               {{ category.name }}

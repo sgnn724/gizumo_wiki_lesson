@@ -4,6 +4,11 @@
       class="categoryPost"
       :access="access"
       :error-message="errorMessage"
+      :category="inputCategory"
+      :disabled="disabled"
+      :done-message="doneMessage"
+      @updateValue="updateValue($event)"
+      @handleSubmit="handleSubmit"
     />
     <app-category-list
       class="categoryList"
@@ -25,6 +30,7 @@ export default {
   data() {
     return {
       theads: ['カテゴリー名'],
+      name: '',
     };
   },
   computed: {
@@ -37,6 +43,16 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
+    inputCategory() {
+      const { name } = this.$store.state.categories.inputCategory;
+      return name;
+    },
+    disabled() {
+      return this.$store.state.categories.disabled;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
   },
   created() {
     this.fetchCategories();
@@ -44,6 +60,16 @@ export default {
   methods: {
     fetchCategories() {
       this.$store.dispatch('categories/getAllCategories');
+    },
+    updateValue($event) {
+      this.$store.dispatch('categories/updateValue', $event.target.value);
+    },
+    handleSubmit() {
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategories').then(() => {
+        this.$store.dispatch('categories/getAllCategories');
+        this.$store.dispatch('categories/initPostCategory');
+      });
     },
   },
 };
