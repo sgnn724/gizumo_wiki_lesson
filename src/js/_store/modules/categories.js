@@ -6,7 +6,6 @@ export default {
     categoriesList: [],
     errorMessage: '',
     inputCategory: {
-      id: null,
       name: '',
     },
     isLoading: false,
@@ -40,7 +39,6 @@ export default {
     },
     initPostCategory(state) {
       state.inputCategory = Object.assign({}, {
-        id: null,
         name: '',
       });
     },
