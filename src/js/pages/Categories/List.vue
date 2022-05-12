@@ -7,6 +7,7 @@
       :category="inputCategory"
       :disabled="isLoading"
       :done-message="doneMessage"
+      @clear-message="clearMessage"
       @update-value="updateValue($event)"
       @handle-submit="handleSubmit"
     />
@@ -70,6 +71,9 @@ export default {
         this.$store.dispatch('categories/initPostCategory');
         this.$store.dispatch('categories/getAllCategories');
       });
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
     },
   },
 };

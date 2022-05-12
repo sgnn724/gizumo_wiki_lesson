@@ -63,7 +63,6 @@ export default {
     postCategories({ commit, rootGetters }) {
       return new Promise((resolve) => {
         commit('toggleLoading');
-        commit('clearMessage');
         const data = new URLSearchParams();
         data.append('name', rootGetters['categories/inputCategory'].name);
         axios(rootGetters['auth/token'])({
@@ -82,6 +81,9 @@ export default {
     },
     initPostCategory({ commit }) {
       commit('initPostCategory');
+    },
+    clearMessage({ commit }) {
+      commit('clearMessage');
     },
   },
 };

@@ -72,7 +72,7 @@ export default {
   methods: {
     addCategory() {
       if (!this.access.create) return;
-      this.$emit('clearMessage');
+      this.$emit('clear-message');
       this.$validator.validate().then((valid) => {
         if (valid) this.$emit('handle-submit');
       });
