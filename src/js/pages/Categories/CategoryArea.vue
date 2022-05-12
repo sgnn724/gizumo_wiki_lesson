@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="category">
     <app-category-post
-      :loading="loading"
+      :disabled="loading"
       :category="category"
       :access="access"
       class="category-post"
