@@ -31,7 +31,7 @@ export default {
     toggleLoading(state) {
       state.disabled = !state.disabled;
     },
-    displayDoneMessage(state, payload = { message: 'カテゴリー作成成功しました' }) {
+    displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
     },
     clearMessage(state) {
@@ -74,7 +74,7 @@ export default {
           data,
         }).then(() => {
           commit('toggleLoading');
-          commit('displayDoneMessage');
+          commit('displayDoneMessage', { message: 'カテゴリー新規作成しました' });
           resolve();
         }).catch((err) => {
           commit('toggleLoading');
