@@ -9,7 +9,7 @@ export default {
       id: null,
       name: '',
     },
-    disabled: false,
+    isLoading: false,
     doneMessage: '',
   },
   getters: {
@@ -29,7 +29,7 @@ export default {
       state.categoriesList.unshift(payload);
     },
     toggleLoading(state) {
-      state.disabled = !state.disabled;
+      state.isLoading = !state.isLoading;
     },
     displayDoneMessage(state, payload = { message: '成功しました' }) {
       state.doneMessage = payload.message;
@@ -63,7 +63,7 @@ export default {
       commit('updateValue', payload);
     },
     postCategories({ commit, rootGetters }) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         commit('toggleLoading');
         commit('clearMessage');
         const data = new URLSearchParams();
@@ -73,13 +73,12 @@ export default {
           url: '/category',
           data,
         }).then(() => {
-          commit('toggleLoading');
           commit('displayDoneMessage', { message: 'カテゴリー新規作成しました' });
           resolve();
         }).catch((err) => {
-          commit('toggleLoading');
           commit('failRequest', { message: err.message });
-          reject();
+        }).finally(() => {
+          commit('toggleLoading');
         });
       });
     },

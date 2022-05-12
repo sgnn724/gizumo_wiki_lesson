@@ -5,10 +5,10 @@
       :access="access"
       :error-message="errorMessage"
       :category="inputCategory"
-      :disabled="disabled"
+      :disabled="isLoading"
       :done-message="doneMessage"
-      @updateValue="updateValue($event)"
-      @handleSubmit="handleSubmit"
+      @update-value="updateValue($event)"
+      @handle-submit="handleSubmit"
     />
     <app-category-list
       class="categoryList"
@@ -47,8 +47,8 @@ export default {
       const { name } = this.$store.state.categories.inputCategory;
       return name;
     },
-    disabled() {
-      return this.$store.state.categories.disabled;
+    isLoading() {
+      return this.$store.state.categories.isLoading;
     },
     doneMessage() {
       return this.$store.state.categories.doneMessage;
