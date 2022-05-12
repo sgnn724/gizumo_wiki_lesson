@@ -1,11 +1,10 @@
 import axios from '@Helpers/axiosDefault';
-// import { resolve } from 'core-js/fn/promise';
 
 export default {
   namespaced: true,
   state: {
     categoryList: [],
-    targetCategory: {
+    category: {
       id: null,
       name: '',
     },
@@ -19,8 +18,15 @@ export default {
     targetCategory: state => state.targetCategory,
     categoryId: state => state.categoryId,
     categoryName: state => state.categoryName,
+    category: state => state.category,
   },
   mutations: {
+    initCategory(state) {
+      state.category = Object.assign({}, {
+        id: null,
+        name: '',
+      });
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories].reverse();
     },
@@ -41,8 +47,14 @@ export default {
       state.doneMessage = '';
       state.errorMessage = '';
     },
+    updateValue(state, payload) {
+      state.category.name = payload;
+    },
   },
   actions: {
+    initCategory({ commit }) {
+      commit('initCategory');
+    },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -58,17 +70,17 @@ export default {
     },
     postCategory({ commit, rootGetters }) {
       return new Promise((resolve, reject) => {
-        commit('clearMessage');
         commit('toggleLoading');
+        commit('clearMessage');
         const data = new URLSearchParams();
-        data.append('name', rootGetters['categories/targetCategory'].name);
+        data.append('name', rootGetters['categories/category'].name);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
           data,
         }).then(() => {
           commit('toggleLoading');
-          commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+          commit('displayDoneMessage', { message: 'カテゴリーを作成しました。' });
           resolve();
         }).catch((err) => {
           commit('toggleLoading');
@@ -76,6 +88,9 @@ export default {
           reject();
         });
       });
+    },
+    updateValue({ commit }, payload) {
+      commit('updateValue', payload);
     },
     confirmDeleteCategory({ commit }, categoryId, categoryName) {
       commit('confirmDeleteCategory', {

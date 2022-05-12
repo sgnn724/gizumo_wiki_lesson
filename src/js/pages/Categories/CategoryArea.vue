@@ -5,7 +5,10 @@
       :category="category"
       :access="access"
       class="category-post"
+      :done-message="doneMessage"
+      :error-message="errorMessage"
       @handle-submit="handleSubmit"
+      @update-value="updateValue($event)"
     />
     <app-category-list
       class="category-list"
@@ -45,8 +48,14 @@ export default {
       return this.$store.getters['auth/access'];
     },
     category() {
-      const { name } = this.$store.state.categories.targetCategory;
+      const { name } = this.$store.state.categories.category;
       return name;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
   },
   created() {
@@ -56,10 +65,8 @@ export default {
     handleSubmit() {
       if (this.loading) return;
       this.$store.dispatch('categories/postCategory').then(() => {
-        this.$router.push({
-          path: '/categories',
-          query: { redirect: '/category/post' },
-        });
+        this.$store.dispatch('categories/getAllCategories');
+        this.$store.dispatch('categories/initCategory');
       });
     },
     openModal(categoryId, categoryName) {
@@ -68,7 +75,10 @@ export default {
     },
     getAllCategories() {
       this.$store.dispatch('categories/getAllCategories');
-    }
+    },
+    updateValue($event) {
+      this.$store.dispatch('categories/updateValue', $event.target.value);
+    },
   },
 };
 </script>
@@ -86,4 +96,3 @@ export default {
   }
 }
 </style>
-
