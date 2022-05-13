@@ -84,6 +84,7 @@ const router = new VueRouter({
             if (isCategory && isRedirect) {
               next();
             } else {
+              Store.dispatch('categories/clearMessage');
               next();
             }
           },

@@ -46,6 +46,10 @@ export default {
     },
   },
   actions: {
+    
+    clearMessage( { commit } ) {
+      commit('clearMessage');
+    },
     initCategory({ commit }) {
       commit('initCategory');
     },

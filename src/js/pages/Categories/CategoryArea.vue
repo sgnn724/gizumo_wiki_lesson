@@ -7,7 +7,6 @@
       class="category-post"
       :done-message="doneMessage"
       :error-message="errorMessage"
-      :clear-message="clearMessage"
       @handle-submit="handleSubmit"
       @update-value="updateValue($event)"
     />
@@ -79,9 +78,6 @@ export default {
     },
     updateValue($event) {
       this.$store.dispatch('categories/updateValue', $event.target.value);
-    },
-    clearMessage() {
-      this.$store.dispatch('categories/clearMessage');
     },
   },
 };
