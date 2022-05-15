@@ -10,9 +10,11 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    deleteCategoryId: '',
   },
   getters: {
     category: state => state.category,
+    deleteCategoryId: state => state.deleteCategoryId,
   },
   mutations: {
     initCategory(state) {
@@ -30,9 +32,8 @@ export default {
     toggleLoading(state) {
       state.loading = !state.loading;
     },
-    confirmDeleteCategory(state, { categoryId, categoryName }) {
-      state.categoryId = categoryId;
-      state.categoryName = categoryName;
+    confirmDeleteCategory(state, { payload }) {
+      state.deleteCategoryId = payload;
     },
     displayDoneMessage(state, payload) {
       state.doneMessage = payload.message;
@@ -46,8 +47,7 @@ export default {
     },
   },
   actions: {
-    
-    clearMessage( { commit } ) {
+    clearMessage({ commit }) {
       commit('clearMessage');
     },
     initCategory({ commit }) {
@@ -89,9 +89,9 @@ export default {
     updateValue({ commit }, payload) {
       commit('updateValue', payload);
     },
-    confirmDeleteCategory({ commit }, categoryId, categoryName) {
+    confirmDeleteCategory({ commit }, payload) {
       commit('confirmDeleteCategory', {
-        categoryId, categoryName,
+        payload,
       });
     },
   },

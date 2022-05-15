@@ -14,6 +14,7 @@
       class="category-list"
       :categories="categoryList"
       :access="access"
+      @hamdle-click="handleClick"
       @open-modal="openModal"
     />
   </div>
@@ -70,7 +71,7 @@ export default {
       });
     },
     openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/confirmDeleteCategory', categoryId, categoryName);
+      this.$store.dispatch('categories/confirmDeleteCategory', categoryId,);
       this.toggleModal();
     },
     getAllCategories() {
@@ -79,6 +80,10 @@ export default {
     updateValue($event) {
       this.$store.dispatch('categories/updateValue', $event.target.value);
     },
+    handleClick() {
+      this.$store.dispatch('categories/handleClick');
+    }
+
   },
 };
 </script>
