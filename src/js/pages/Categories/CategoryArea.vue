@@ -12,9 +12,10 @@
     />
     <app-category-list
       class="category-list"
+      :delete-category-name="deleteCategoryName"
       :categories="categoryList"
       :access="access"
-      @hamdle-click="handleClick"
+      @handle-click="handleClick"
       @open-modal="openModal"
     />
   </div>
@@ -58,6 +59,9 @@ export default {
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategoryName;
+    }
   },
   created() {
     this.getAllCategories();
@@ -71,7 +75,8 @@ export default {
       });
     },
     openModal(categoryId, categoryName) {
-      this.$store.dispatch('categories/confirmDeleteCategory', categoryId,);
+      const targetCategory = { categoryId, categoryName }
+      this.$store.dispatch('categories/confirmDeleteCategory', targetCategory);
       this.toggleModal();
     },
     getAllCategories() {
@@ -81,11 +86,13 @@ export default {
       this.$store.dispatch('categories/updateValue', $event.target.value);
     },
     handleClick() {
-      this.$store.dispatch('categories/handleClick');
-    }
-
+      this.toggleModal();
+      this.$store.dispatch('categories/deleteCategory').then(() => {
+        this.$store.dispatch('categories/getAllCategories');
+      });
+    },
   },
-};
+}
 </script>
 <style lang="postcss" scoped>
 .category {
