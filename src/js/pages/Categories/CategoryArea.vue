@@ -34,7 +34,7 @@ export default {
   },
   data() {
     return {
-      name: '',
+      name: '', 
     };
   },
   computed: {
@@ -79,6 +79,7 @@ export default {
     updateValue($event) {
       this.$store.dispatch('categories/updateValue', $event.target.value);
     },
+    }
   },
 };
 </script>
