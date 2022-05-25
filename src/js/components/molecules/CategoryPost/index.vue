@@ -71,12 +71,10 @@ export default {
   },
   methods: {
     addCategory() {
-      console.log(2123);
       if (!this.access.create) return;
       this.$emit('clear-message');
       this.$validator.validate().then((valid) => {
         if (valid) this.$emit('handle-submit');
-        console.log(valid);
       });
     },
   },

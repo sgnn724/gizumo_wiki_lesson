@@ -103,14 +103,14 @@ export default {
     updateCategoryName({ commit }, payload) {
       commit('updateCategoryName', payload);
     },
-    deleteCategory({ commit, rootGetters }) {
+    deleteCategory({ commit, state, rootGetters }) {
       return new Promise((resolve) => {
         commit('clearMessage');
         const data = new URLSearchParams();
-        data.append('id', rootGetters['categories/deleteCategoryId']);
+        data.append('id', state.deleteCategoryId);
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
-          url: `/category/${rootGetters['categories/deleteCategoryId']}`,
+          url: `/category/${state.deleteCategoryId}`,
           data,
         }).then(() => {
           commit('doneDeleteCategory');

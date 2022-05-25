@@ -33,9 +33,6 @@ export default {
     appCategoryPost: CategoryPost,
   },
   mixins: [Mixins],
-  beforeRouteUpdate(next) {
-    next();
-  },
   data() {
     return {
       theads: ['カテゴリー名'],
