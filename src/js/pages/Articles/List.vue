@@ -52,7 +52,6 @@ export default {
     handleClick() {
       this.$store.dispatch('articles/deleteArticle');
       this.toggleModal();
-      console.log(this.$route.query.category);
       if (this.$route.query.category) {
         const { category } = this.$route.query;
         this.title = category;
