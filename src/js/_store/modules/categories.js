@@ -111,7 +111,6 @@ export default {
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
           url: `/category/${state.deleteCategoryId}`,
-          data,
         }).then(() => {
           commit('doneDeleteCategory');
           commit('displayDoneMessage', { message: 'ドキュメントを削除しました' });
