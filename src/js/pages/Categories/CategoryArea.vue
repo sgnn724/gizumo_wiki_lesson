@@ -1,10 +1,14 @@
 <template lang="html">
   <div class="category">
     <app-category-post
+      :disabled="loading"
       :category="category"
       :access="access"
       class="category-post"
+      :done-message="doneMessage"
+      :error-message="errorMessage"
       @handle-submit="handleSubmit"
+      @update-value="updateValue($event)"
     />
     <app-category-list
       class="category-list"
@@ -14,7 +18,6 @@
     />
   </div>
 </template>
-
 <script>
 import { CategoryPost, CategoryList } from '@Components/molecules';
 import Mixins from '@Helpers/mixins';
@@ -38,12 +41,21 @@ export default {
     categoryList() {
       return this.$store.state.categories.categoryList;
     },
+    loading() {
+      return this.$store.state.categories.loading;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
     category() {
-      const { name } = this.$store.state.categories.targetCategory;
+      const { name } = this.$store.state.categories.category;
       return name;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
     },
   },
   created() {
@@ -51,7 +63,11 @@ export default {
   },
   methods: {
     handleSubmit() {
-      this.$store.dispatch('categories/postCategory');
+      if (this.loading) return;
+      this.$store.dispatch('categories/postCategory').then(() => {
+        this.$store.dispatch('categories/getAllCategories');
+        this.$store.dispatch('categories/initCategory');
+      });
     },
     openModal(categoryId, categoryName) {
       this.$store.dispatch('categories/confirmDeleteCategory', categoryId, categoryName);
@@ -59,6 +75,10 @@ export default {
     },
     getAllCategories() {
       this.$store.dispatch('categories/getAllCategories');
+    },
+    updateValue($event) {
+      this.$store.dispatch('categories/updateValue', $event.target.value);
+    },
     }
   },
 };
@@ -77,4 +97,3 @@ export default {
   }
 }
 </style>
-

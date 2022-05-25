@@ -1,6 +1,6 @@
 <template>
   <div class="category-list">
-        <h1 theme-color bold class="category-list__title">カテゴリー一覧</h1>
+    <h1 theme-color bold class="category-list__title">カテゴリー一覧</h1>
     <table class="category-list__table">
       <thead class="category-list__table__head">
         <tr>
@@ -120,11 +120,11 @@ export default {
   methods: {
     openModal(categoryId, categoryName) {
       if (!this.access.delete) return;
-      this.$emit('openModal', categoryId, categoryName);
+      this.$emit('open-modal', categoryId, categoryName);
     },
     handleClick() {
       if (!this.access.delete) return;
-      this.$emit('handleClick');
+      this.$emit('handle-click');
     },
   },
 };

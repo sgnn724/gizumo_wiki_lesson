@@ -17,7 +17,6 @@ import ArticlePost from '@Pages/Articles/Post';
 import Categories from '@Pages/Categories';
 import CategoryArea from '@Pages/Categories/CategoryArea';
 
-
 // 自分のアカウントページ
 import Profile from '@Pages/Profile';
 

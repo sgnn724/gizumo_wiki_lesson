@@ -110,13 +110,11 @@ export default {
           data,
         }).then((response) => {
           if (!response.data.token) reject(new Error());
-
           return axios(response.data.token)({
             method: 'GET',
             url: '/me',
           }).then((ownData) => {
             if (ownData.data.code === 0) return reject(new Error());
-
             return { token: response.data.token, user: ownData.data.user };
           }).catch(() => reject(new Error()));
         }).then((payload) => {

@@ -1,25 +1,26 @@
 import axios from '@Helpers/axiosDefault';
-// import { resolve } from 'core-js/fn/promise';
 
 export default {
   namespaced: true,
   state: {
     categoryList: [],
-    targetCategory: {
-      id: null,
+    category: {
       name: '',
     },
+    loading: false,
     doneMessage: '',
     errorMessage: '',
-    categoryId: null,
-    categoryName: '',
   },
   getters: {
-    targetCategory: state => state.targetCategory,
-    categoryId: state => state.categoryId,
-    categoryName: state => state.categoryName,
+    category: state => state.category,
   },
   mutations: {
+    initCategory(state) {
+      state.category = Object.assign({}, {
+        id: null,
+        name: '',
+      });
+    },
     doneGetAllCategories(state, payload) {
       state.categoryList = [...payload.categories].reverse();
     },
@@ -33,11 +34,25 @@ export default {
       state.categoryId = categoryId;
       state.categoryName = categoryName;
     },
-    displayDoneMessage(state, payload = { message: '成功しました' }) {
+    displayDoneMessage(state, payload) {
       state.doneMessage = payload.message;
+    },
+    clearMessage(state) {
+      state.doneMessage = '';
+      state.errorMessage = '';
+    },
+    updateValue(state, payload) {
+      state.category.name = payload;
     },
   },
   actions: {
+    
+    clearMessage( { commit } ) {
+      commit('clearMessage');
+    },
+    initCategory({ commit }) {
+      commit('initCategory');
+    },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -52,25 +67,27 @@ export default {
       });
     },
     postCategory({ commit, rootGetters }) {
-      return new Promise((resolve, reject) => {
-        commit('clearMessage');
+      return new Promise((resolve) => {
         commit('toggleLoading');
+        commit('clearMessage');
         const data = new URLSearchParams();
-        data.append('name', rootGetters['categories/targetCategory'].name);
+        data.append('name', rootGetters['categories/category'].name);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
           data,
         }).then(() => {
           commit('toggleLoading');
-          commit('displayDoneMessage', { message: 'ドキュメントを作成しました' });
+          commit('displayDoneMessage', { message: 'カテゴリーを作成しました。' });
           resolve();
         }).catch((err) => {
           commit('toggleLoading');
           commit('failRequest', { message: err.message });
-          reject();
         });
       });
+    },
+    updateValue({ commit }, payload) {
+      commit('updateValue', payload);
     },
     confirmDeleteCategory({ commit }, categoryId, categoryName) {
       commit('confirmDeleteCategory', {
