@@ -86,9 +86,9 @@ export default {
       this.$store.dispatch('categories/updateValue', $event.target.value);
     },
     handleClick() {
-      this.toggleModal();
       this.$store.dispatch('categories/deleteCategory').then(() => {
         this.$store.dispatch('categories/getAllCategories');
+        this.toggleModal();
       });
     },
   },
