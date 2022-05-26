@@ -10,9 +10,13 @@ export default {
     loading: false,
     doneMessage: '',
     errorMessage: '',
+    deleteCategoryId: 'null',
+    deleteCategoryName: '',
   },
   getters: {
     category: state => state.category,
+    deleteCategoryId: state => state.deleteCategoryId,
+    deleteCategoryName: state => state.deleteCategoryName,
   },
   mutations: {
     initCategory(state) {
@@ -31,8 +35,8 @@ export default {
       state.loading = !state.loading;
     },
     confirmDeleteCategory(state, { categoryId, categoryName }) {
-      state.categoryId = categoryId;
-      state.categoryName = categoryName;
+      state.deleteCategoryId = categoryId;
+      state.deleteCategoryName = categoryName;
     },
     displayDoneMessage(state, payload) {
       state.doneMessage = payload.message;
@@ -44,10 +48,13 @@ export default {
     updateValue(state, payload) {
       state.category.name = payload;
     },
+    doneDeleteCategory(state) {
+      state.deleteCategoryId = null;
+      state.deleteCategoryName = '';
+    }
   },
   actions: {
-    
-    clearMessage( { commit } ) {
+    clearMessage({ commit }) {
       commit('clearMessage');
     },
     initCategory({ commit }) {
@@ -89,9 +96,22 @@ export default {
     updateValue({ commit }, payload) {
       commit('updateValue', payload);
     },
-    confirmDeleteCategory({ commit }, categoryId, categoryName) {
-      commit('confirmDeleteCategory', {
-        categoryId, categoryName,
+    confirmDeleteCategory({ commit }, payload) {
+      commit('confirmDeleteCategory', payload);
+    },
+    deleteCategory({ commit, rootGetters, state}) {
+      return new Promise((resolve) => {
+        commit('clearMessage');
+        axios(rootGetters['auth/token'])({
+          method: 'DELETE',
+          url: `/category/${state.deleteCategoryId}`,
+      }).then(() => {
+        commit('doneDeleteCategory');
+        commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
+        resolve();
+      }).catch((err) => {
+        commit('failRequest', { message: err.message });
+      });
       });
     },
   },
