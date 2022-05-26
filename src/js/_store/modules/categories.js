@@ -101,18 +101,15 @@ export default {
     },
     deleteCategory({ commit, rootGetters, state}) {
       return new Promise((resolve) => {
-        commit('toggleLoading');
         commit('clearMessage');
         axios(rootGetters['auth/token'])({
           method: 'DELETE',
           url: `/category/${state.deleteCategoryId}`,
       }).then(() => {
-        commit('toggleLoading');
         commit('doneDeleteCategory');
         commit('displayDoneMessage', { message: 'カテゴリーを削除しました' });
         resolve();
       }).catch((err) => {
-        commit('toggleLoading');
         commit('failRequest', { message: err.message });
       });
       });
