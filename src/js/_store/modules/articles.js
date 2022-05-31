@@ -157,6 +157,7 @@ export default {
               category,
             },
           };
+          console.log(payload);
           commit('doneGetArticle', payload);
           resolve();
         }).catch((err) => {

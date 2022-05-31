@@ -3,6 +3,10 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
+    targetCategory: {
+      id: null,
+      name: '',
+    },
     categoriesList: [],
     errorMessage: '',
     inputCategory: {
@@ -54,8 +58,41 @@ export default {
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
     },
+    editTitle(state, payload) {
+      state.targetCategory = Object.assign({}, { ...state.targetCategory }, {
+        name: payload.name,
+      });
+    },
+    doneGetCategory(state, payload) {
+      state.targetCategory = Object.assign({}, state.targetCategory, payload.category);
+    },
+    updateArticle(state, { category }) {
+      state.targetCategory = Object.assign({}, state.targetArticle, { ...category });
+    },
   },
   actions: {
+    getCategoryDetail({ commit, rootGetters }, categoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then((res) => {
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('doneGetCategory', payload);
+      }).catch((err) => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    editTitle({ commit }, name) {
+      commit({
+        type: 'editTitle',
+        name,
+      });
+    },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -116,6 +153,26 @@ export default {
         }).catch((err) => {
           commit('failRequest', { message: err.message });
         });
+      });
+    },
+    handleClick({ commit, state, rootGetters }, categoryId) {
+      commit('clearMessage');
+      const data = new URLSearchParams();
+      data.append('name', state.targetCategory.name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${categoryId}`,
+        data,
+      }).then(() => {
+        const payload = {
+          category: {
+            name: state.targetCategory.name,
+          },
+        };
+        commit('updateArticle', payload);
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch((err) => {
+        commit('failRequest', { message: err.message });
       });
     },
   },
