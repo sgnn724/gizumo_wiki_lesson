@@ -6,7 +6,7 @@
       :type="type"
       :placeholder="placeholder"
       :value="value"
-      @input="$emit('update-value', $event)"
+      @input="$emit('updateValue', $event)"
     >
 
     <transition name="shake">

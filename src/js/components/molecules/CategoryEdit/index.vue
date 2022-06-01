@@ -12,7 +12,7 @@
     <div class="article-edit-form">
       <app-input
         :value="categoryTitle"
-        @update-value="$emit('edit-title', $event)"
+        @updateValue="$emit('edit-title', $event)"
       />
     </div>
     <app-button
