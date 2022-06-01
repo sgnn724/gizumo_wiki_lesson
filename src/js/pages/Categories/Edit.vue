@@ -15,11 +15,6 @@ export default {
   components: {
     appEdit: Edit,
   },
-  data() {
-    return {
-      name: '',
-    };
-  },
   computed: {
     categoryTitle() {
       const { name } = this.$store.state.categories.targetCategory;
