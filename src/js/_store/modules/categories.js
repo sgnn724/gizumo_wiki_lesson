@@ -112,7 +112,6 @@ export default {
         commit('toggleLoading');
         const data = new URLSearchParams();
         data.append('name', rootGetters['categories/inputCategory'].name);
-        console.log(data);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',
@@ -155,6 +154,8 @@ export default {
       });
     },
     handleClick({ commit, state, rootGetters }, categoryId) {
+      commit('clearMessage');
+      commit('toggleLoading');
       const data = new URLSearchParams();
       data.append('name', state.targetCategory.name);
       axios(rootGetters['auth/token'])({
@@ -166,6 +167,8 @@ export default {
         commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
       }).catch((err) => {
         commit('failRequest', { message: err.message });
+      }).finally(() => {
+        commit('toggleLoading');
       });
     },
   },

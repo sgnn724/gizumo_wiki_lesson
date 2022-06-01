@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     updateValue($event) {
-      this.$emit('update-value', $event.target);//要確認
+      this.$emit('update-value', $event.target);
     },
     handleSubmit() {
       this.$validator.validate().then((valid) => {

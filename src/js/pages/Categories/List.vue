@@ -74,7 +74,6 @@ export default {
       this.$store.dispatch('categories/updateValue', $event.target.value);
     },
     handleSubmit() {
-      if (this.loading) return;
       this.$store.dispatch('categories/postCategories').then(() => {
         this.$store.dispatch('categories/initPostCategory');
         this.$store.dispatch('categories/getAllCategories');

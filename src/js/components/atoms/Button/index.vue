@@ -117,6 +117,7 @@ export default {
 .button--disabled {
   background-color: var(--disabledColor);
   cursor: default;
+  /* pointer-events: none; */
   &:hover {
     opacity: 1;
   }

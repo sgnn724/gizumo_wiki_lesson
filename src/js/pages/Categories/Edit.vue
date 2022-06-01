@@ -4,6 +4,8 @@
     :done-message="doneMessage"
     :category-id="categoryId"
     :category-title="categoryTitle"
+    :access="access"
+    :disabled="isLoading"
     @edit-title="editTitle($event)"
     @handle-click="handleClick"
   />
@@ -16,6 +18,12 @@ export default {
     appEdit: Edit,
   },
   computed: {
+    isLoading() {
+      return this.$store.state.categories.isLoading;
+    },
+    access() {
+      return this.$store.getters['auth/access'];
+    },
     categoryTitle() {
       const { name } = this.$store.state.categories.targetCategory;
       return name;
@@ -39,6 +47,7 @@ export default {
       this.$store.dispatch('categories/editTitle', $event.target.value);
     },
     handleClick() {
+      if (this.isLoading) return;
       this.$store.dispatch('categories/handleClick', this.categoryId);
     },
   },

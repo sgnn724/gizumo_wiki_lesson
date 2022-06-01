@@ -19,9 +19,10 @@
       class="category-management-post__submit"
       button-type="submit"
       round
+      :disabled="disabled || !access.create"
       @click="$emit('handle-click')"
     >
-      更新
+      {{ buttonText }}
     </app-button>
     <div v-if="errorMessage" class="category-management-post__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
@@ -58,6 +59,20 @@ export default ({
       type: String,
       default: '',
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
+    access: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  computed: {
+    buttonText() {
+      if (!this.access.create) return '更新権限がありません';
+      return this.disabled ? '更新中...' : '更新';
+    },
   },
 });
 </script>
@@ -65,6 +80,9 @@ export default ({
 <style lang="postcss" scoped>
 .category-management-post {
   &__submit {
+    margin-top: 16px;
+  }
+  &__notice {
     margin-top: 16px;
   }
 }
