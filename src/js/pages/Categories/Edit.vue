@@ -6,22 +6,19 @@
     :category-title="categoryTitle"
     @edit-title="editTitle($event)"
     @handleClick="handleClick"
-   />
+  />
 </template>
 <script>
 import { Edit } from '@Components/molecules';
 
 export default {
+  components: {
+    appEdit: Edit,
+  },
   data() {
     return {
       name: '',
     };
-  },
-  components: {
-    appEdit: Edit,
-  },
-  created() {
-    this.$store.dispatch('categories/getCategoryDetail', this.categoryId);
   },
   computed: {
     categoryTitle() {
@@ -39,13 +36,15 @@ export default {
       return this.$store.state.categories.doneMessage;
     },
   },
+  created() {
+    this.$store.dispatch('categories/getCategoryDetail', this.categoryId);
+  },
   methods: {
     editTitle($event) {
       this.$store.dispatch('categories/editTitle', $event.target.value);
     },
     handleClick() {
       this.$store.dispatch('categories/handleClick', this.categoryId);
-      console.log(22222);
     },
   },
 };

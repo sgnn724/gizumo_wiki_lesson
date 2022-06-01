@@ -23,11 +23,9 @@
     >
       更新
     </app-button>
-
     <div v-if="errorMessage" class="category-management-post__notice">
       <app-text bg-error>{{ errorMessage }}</app-text>
     </div>
-
     <div v-if="doneMessage" class="category-management-post__notice">
       <app-text bg-success>{{ doneMessage }}</app-text>
     </div>
