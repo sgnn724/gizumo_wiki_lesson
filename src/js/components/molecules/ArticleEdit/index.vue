@@ -18,7 +18,7 @@
           data-vv-as="カテゴリー"
           :error-messages="errors.collect('category')"
           :value="currentCategoryName"
-          @updateValue="$emit('selectedArticleCategory', $event)"
+          @update-value="$emit('selectedArticleCategory', $event)"
         >
           <option
             v-for="(category) in categoryList"
@@ -44,7 +44,7 @@
             data-vv-as="記事のタイトル"
             :error-messages="errors.collect('title')"
             :value="articleTitle"
-            @updateValue="$emit('editedTitle', $event)"
+            @update-value="$emit('editedTitle', $event)"
           />
         </div>
 
@@ -57,7 +57,7 @@
             data-vv-as="記事の本文"
             :error-messages="errors.collect('content')"
             :value="articleContent"
-            @updateValue="$emit('editedContent', $event)"
+            @update-value="$emit('editedContent', $event)"
           />
         </div>
         <app-button

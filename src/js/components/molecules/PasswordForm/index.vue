@@ -12,7 +12,7 @@
           data-vv-as="現在のパスワード"
           :error-messages="errors.collect('password')"
           :value="password"
-          @updateValue="updateValue"
+          @update-value="updateValue"
         />
       </div>
 
@@ -25,7 +25,7 @@
           data-vv-as="新しく設定するパスワード"
           :error-messages="errors.collect('newPassword')"
           :value="newPassword"
-          @updateValue="updateValue"
+          @update-value="updateValue"
         />
       </div>
 
@@ -38,7 +38,7 @@
           data-vv-as="新しく設定するパスワードの確認"
           :error-messages="errors.collect('confirmNewPassword')"
           :value="confirmNewPassword"
-          @updateValue="updateValue"
+          @update-value="updateValue"
         />
       </div>
 

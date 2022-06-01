@@ -112,6 +112,7 @@ export default {
         commit('toggleLoading');
         const data = new URLSearchParams();
         data.append('name', rootGetters['categories/inputCategory'].name);
+        console.log(data);
         axios(rootGetters['auth/token'])({
           method: 'POST',
           url: '/category',

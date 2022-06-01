@@ -4,7 +4,7 @@
     :email="email"
     :password="password"
     :error-message="errorMessage"
-    @updateValue="updateValue"
+    @update-value="updateValue"
     @handleSubmit="signIn"
   />
 </template>

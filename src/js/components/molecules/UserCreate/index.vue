@@ -23,7 +23,7 @@
           data-vv-as="アカウント名"
           :error-messages="errors.collect('accountName')"
           :value="accountName"
-          @updateValue="updateValue"
+          @update-value="updateValue"
         />
       </div>
       <div class="users-create__input">
@@ -35,7 +35,7 @@
           data-vv-as="メールアドレス"
           :error-messages="errors.collect('email')"
           :value="email"
-          @updateValue="updateValue"
+          @update-value="updateValue"
         />
       </div>
       <div class="users-create__input">
@@ -47,7 +47,7 @@
           data-vv-as="パスワード"
           :error-messages="errors.collect('password')"
           :value="password"
-          @updateValue="updateValue"
+          @update-value="updateValue"
         />
       </div>
 
@@ -127,7 +127,7 @@ export default {
   },
   methods: {
     updateValue($event) {
-      this.$emit('updateValue', $event.target);
+      this.$emit('update-value', $event.target);
     },
     createUser() {
       if (!this.access.create) return;

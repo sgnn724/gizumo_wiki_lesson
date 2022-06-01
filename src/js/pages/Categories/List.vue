@@ -8,7 +8,7 @@
       :disabled="isLoading"
       :done-message="doneMessage"
       @clear-message="clearMessage"
-      @updateValue="updateValue($event)"
+      @update-value="updateValue($event)"
       @handle-submit="handleSubmit"
     />
     <app-category-list
