@@ -19,7 +19,7 @@
       class="category-management-post__submit"
       button-type="submit"
       round
-      @click="$emit('handleClick')"
+      @click="$emit('handle-click')"
     >
       更新
     </app-button>

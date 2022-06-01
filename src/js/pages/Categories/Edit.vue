@@ -5,7 +5,7 @@
     :category-id="categoryId"
     :category-title="categoryTitle"
     @edit-title="editTitle($event)"
-    @handleClick="handleClick"
+    @handle-click="handleClick"
   />
 </template>
 <script>
@@ -49,5 +49,4 @@ export default {
   },
 };
 </script>
-<style lang="">
-</style>
+

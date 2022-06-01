@@ -66,9 +66,6 @@ export default {
     doneGetCategory(state, payload) {
       state.targetCategory = Object.assign({}, state.targetCategory, payload.category);
     },
-    updateArticle(state, { category }) {
-      state.targetCategory = Object.assign({}, state.targetArticle, { ...category });
-    },
   },
   actions: {
     getCategoryDetail({ commit, rootGetters }, categoryId) {
@@ -101,6 +98,7 @@ export default {
         const payload = {
           categories: res.data.categories,
         };
+        commit('clearMessage');
         commit('doneGetAllCategories', payload);
       }).catch((err) => {
         commit('failRequest', { message: err.message });
@@ -156,7 +154,6 @@ export default {
       });
     },
     handleClick({ commit, state, rootGetters }, categoryId) {
-      commit('clearMessage');
       const data = new URLSearchParams();
       data.append('name', state.targetCategory.name);
       axios(rootGetters['auth/token'])({
@@ -164,12 +161,7 @@ export default {
         url: `/category/${categoryId}`,
         data,
       }).then(() => {
-        const payload = {
-          category: {
-            name: state.targetCategory.name,
-          },
-        };
-        commit('updateArticle', payload);
+        commit('clearMessage');
         commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
       }).catch((err) => {
         commit('failRequest', { message: err.message });
