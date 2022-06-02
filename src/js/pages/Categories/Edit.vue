@@ -28,10 +28,6 @@ export default {
       const { name } = this.$store.state.categories.targetCategory;
       return name;
     },
-    categoryId() {
-      const { id } = this.$route.params;
-      return id;
-    },
     errorMessage() {
       return this.$store.state.categories.errorMessage;
     },
@@ -40,6 +36,7 @@ export default {
     },
   },
   created() {
+    this.categoryId = this.$route.params.id;
     this.$store.dispatch('categories/getCategoryDetail', this.categoryId);
   },
   methods: {
