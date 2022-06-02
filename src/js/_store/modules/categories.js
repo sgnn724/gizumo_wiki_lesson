@@ -3,7 +3,7 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
-    targetCategory: {
+    editCategory: {
       id: null,
       name: '',
     },
@@ -58,13 +58,13 @@ export default {
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
     },
-    editTitle(state, payload) {
-      state.targetCategory = Object.assign({}, { ...state.targetCategory }, {
+    editCategoryTitle(state, payload) {
+      state.editCategory = Object.assign({}, { ...state.editCategory }, {
         name: payload.name,
       });
     },
     doneGetCategory(state, payload) {
-      state.targetCategory = Object.assign({}, state.targetCategory, payload.category);
+      state.editCategory = Object.assign({}, state.editCategory, payload.category);
     },
   },
   actions: {
@@ -84,9 +84,9 @@ export default {
         commit('failRequest', { message: err.message });
       });
     },
-    editTitle({ commit }, name) {
+    editCategoryTitle({ commit }, name) {
       commit({
-        type: 'editTitle',
+        type: 'editCategoryTitle',
         name,
       });
     },
@@ -157,7 +157,7 @@ export default {
       commit('clearMessage');
       commit('toggleLoading');
       const data = new URLSearchParams();
-      data.append('name', state.targetCategory.name);
+      data.append('name', state.editCategory.name);
       axios(rootGetters['auth/token'])({
         method: 'PUT',
         url: `/category/${categoryId}`,

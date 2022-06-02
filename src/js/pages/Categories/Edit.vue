@@ -6,7 +6,7 @@
     :category-title="categoryTitle"
     :access="access"
     :disabled="isLoading"
-    @edit-title="editTitle($event)"
+    @edit-title="editCategoryTitle($event)"
     @handle-click="handleClick"
   />
 </template>
@@ -25,7 +25,7 @@ export default {
       return this.$store.getters['auth/access'];
     },
     categoryTitle() {
-      const { name } = this.$store.state.categories.targetCategory;
+      const { name } = this.$store.state.categories.editCategory;
       return name;
     },
     errorMessage() {
@@ -40,8 +40,8 @@ export default {
     this.$store.dispatch('categories/getCategoryDetail', this.categoryId);
   },
   methods: {
-    editTitle($event) {
-      this.$store.dispatch('categories/editTitle', $event.target.value);
+    editCategoryTitle($event) {
+      this.$store.dispatch('categories/editCategoryTitle', $event.target.value);
     },
     handleClick() {
       if (this.isLoading) return;
