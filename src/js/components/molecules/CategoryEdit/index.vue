@@ -36,7 +36,7 @@
 <script>
 import {
   Heading, RouterLink, Input, Button, Text,
-} from '../../atoms';
+} from '@Components/atoms';
 
 export default ({
   components: {
