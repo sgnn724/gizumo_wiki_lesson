@@ -45,7 +45,7 @@ export default {
     },
     handleClick() {
       if (this.isLoading) return;
-      this.$store.dispatch('categories/handleClick', this.categoryId);
+      this.$store.dispatch('categories/renewalCategory', this.categoryId);
     },
   },
 };

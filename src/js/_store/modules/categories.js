@@ -153,7 +153,7 @@ export default {
         });
       });
     },
-    handleClick({ commit, state, rootGetters }, categoryId) {
+    renewalCategory({ commit, state, rootGetters }, categoryId) {
       commit('clearMessage');
       commit('toggleLoading');
       const data = new URLSearchParams();
