@@ -153,14 +153,14 @@ export default {
         });
       });
     },
-    renewalCategory({ commit, state, rootGetters }, categoryId) {
+    renewalCategory({ commit, state, rootGetters }) {
       commit('clearMessage');
       commit('toggleLoading');
       const data = new URLSearchParams();
       data.append('name', state.editCategory.name);
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `/category/${categoryId}`,
+        url: `/category/${state.editCategory.id}`,
         data,
       }).then(() => {
         commit('clearMessage');

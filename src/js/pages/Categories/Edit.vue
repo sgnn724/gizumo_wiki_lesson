@@ -2,7 +2,6 @@
   <app-edit
     :error-message="errorMessage"
     :done-message="doneMessage"
-    :category-id="categoryId"
     :category-title="categoryTitle"
     :access="access"
     :disabled="isLoading"
@@ -36,8 +35,9 @@ export default {
     },
   },
   created() {
-    this.categoryId = this.$route.params.id;
-    this.$store.dispatch('categories/getCategoryDetail', this.categoryId);
+    const categoryId = this.$route.params.id;
+    console.log(categoryId);
+    this.$store.dispatch('categories/getCategoryDetail', categoryId);
   },
   methods: {
     editCategoryTitle($event) {
@@ -45,7 +45,7 @@ export default {
     },
     handleClick() {
       if (this.isLoading) return;
-      this.$store.dispatch('categories/renewalCategory', this.categoryId);
+      this.$store.dispatch('categories/renewalCategory');
     },
   },
 };
