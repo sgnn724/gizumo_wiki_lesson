@@ -19,7 +19,7 @@
       class="category-management-post__submit"
       button-type="submit"
       round
-      :disabled="disabled || !access.create"
+      :disabled="disabled || !access.edit"
       @click="$emit('handle-click')"
     >
       {{ buttonText }}
@@ -70,7 +70,7 @@ export default ({
   },
   computed: {
     buttonText() {
-      if (!this.access.create) return '更新権限がありません';
+      if (!this.access.edit) return '更新権限がありません';
       return this.disabled ? '更新中...' : '更新';
     },
   },
