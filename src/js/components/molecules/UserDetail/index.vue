@@ -28,7 +28,7 @@
             data-vv-as="名前"
             :error-messages="errors.collect('fullName')"
             :value="user.fullName"
-            @updateValue="updateValue"
+            @update-value="updateValue"
           />
         </div>
       </div>
@@ -45,7 +45,7 @@
             data-vv-as="アカウント名"
             :error-messages="errors.collect('accountName')"
             :value="user.accountName"
-            @updateValue="updateValue"
+            @update-value="updateValue"
           />
         </div>
       </div>
@@ -62,7 +62,7 @@
             data-vv-as="メールアドレス"
             :error-messages="errors.collect('email')"
             :value="user.email"
-            @updateValue="updateValue"
+            @update-value="updateValue"
           />
         </div>
       </div>
@@ -78,7 +78,7 @@
             data-vv-as="権限"
             :error-messages="errors.collect('role')"
             :value="user.role"
-            @updateValue="updateValue"
+            @update-value="updateValue"
           >
             <option
               v-for="(role, index) in options"
@@ -174,7 +174,7 @@ export default {
   },
   methods: {
     updateValue($event) {
-      this.$emit('updateValue', $event.target);
+      this.$emit('update-value', $event.target);
     },
     editUser() {
       if (!this.access.edit) return;

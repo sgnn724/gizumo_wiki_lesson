@@ -9,7 +9,7 @@
         data-vv-as="メールアドレス"
         :error-messages="errors.collect('email')"
         :value="email"
-        @updateValue="updateValue"
+        @update-value="updateValue"
       />
     </div>
     <div class="login-form">
@@ -21,7 +21,7 @@
         data-vv-as="パスワード"
         :error-messages="errors.collect('password')"
         :value="password"
-        @updateValue="updateValue"
+        @update-value="updateValue"
       />
     </div>
 
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     updateValue($event) {
-      this.$emit('updateValue', $event.target);
+      this.$emit('update-value', $event.target);
     },
     handleSubmit() {
       this.$validator.validate().then((valid) => {

@@ -8,7 +8,7 @@
     :disabled="loading ? true : false"
     :access="access"
     @clearMessage="clearMessage"
-    @updateValue="updateValue"
+    @update-value="updateValue"
     @createUser="createUser"
   />
 </template>

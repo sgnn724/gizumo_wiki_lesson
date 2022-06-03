@@ -3,6 +3,10 @@ import axios from '@Helpers/axiosDefault';
 export default {
   namespaced: true,
   state: {
+    editCategory: {
+      id: null,
+      name: '',
+    },
     categoriesList: [],
     errorMessage: '',
     inputCategory: {
@@ -54,8 +58,38 @@ export default {
     doneDeleteCategory(state) {
       state.deleteCategoryId = null;
     },
+    editCategoryTitle(state, payload) {
+      state.editCategory = Object.assign({}, { ...state.editCategory }, {
+        name: payload.name,
+      });
+    },
+    doneGetCategory(state, payload) {
+      state.editCategory = Object.assign({}, state.editCategory, payload.category);
+    },
   },
   actions: {
+    getCategoryDetail({ commit, rootGetters }, categoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then((res) => {
+        const payload = {
+          category: {
+            id: res.data.category.id,
+            name: res.data.category.name,
+          },
+        };
+        commit('doneGetCategory', payload);
+      }).catch((err) => {
+        commit('failRequest', { message: err.message });
+      });
+    },
+    editCategoryTitle({ commit }, name) {
+      commit({
+        type: 'editCategoryTitle',
+        name,
+      });
+    },
     getAllCategories({ commit, rootGetters }) {
       axios(rootGetters['auth/token'])({
         method: 'GET',
@@ -64,6 +98,7 @@ export default {
         const payload = {
           categories: res.data.categories,
         };
+        commit('clearMessage');
         commit('doneGetAllCategories', payload);
       }).catch((err) => {
         commit('failRequest', { message: err.message });
@@ -116,6 +151,24 @@ export default {
         }).catch((err) => {
           commit('failRequest', { message: err.message });
         });
+      });
+    },
+    renewalCategory({ commit, state, rootGetters }) {
+      commit('clearMessage');
+      commit('toggleLoading');
+      const data = new URLSearchParams();
+      data.append('name', state.editCategory.name);
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${state.editCategory.id}`,
+        data,
+      }).then(() => {
+        commit('clearMessage');
+        commit('displayDoneMessage', { message: 'カテゴリーを更新しました' });
+      }).catch((err) => {
+        commit('failRequest', { message: err.message });
+      }).finally(() => {
+        commit('toggleLoading');
       });
     },
   },
