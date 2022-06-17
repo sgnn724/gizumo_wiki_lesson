@@ -7,6 +7,9 @@ import Signout from '@Pages/Signout';
 import NotFound from '@Pages/NotFound';
 import Home from '@Pages/Home';
 
+// カテゴリー
+import Categories from '@Pages/Categories';
+
 // 記事
 import Articles from '@Pages/Articles';
 import ArticleList from '@Pages/Articles/List';
@@ -68,6 +71,11 @@ const router = new VueRouter({
       component: Profile,
     },
     {
+      name: 'categories',
+      path: '/categories',
+      component: Categories,
+    },
+    {
       path: '/articles',
       component: Articles,
       children: [
@@ -80,7 +88,9 @@ const router = new VueRouter({
              * 記事作成、記事更新、記事削除からリダイレクトするときは?redirect=リダイレクト元のurlのパラメータを
              * 渡してリダイレクト、パラメータが存在する場合はclearMessageアクションを通知しない
              */
-            const isArticle = from.name ? from.name.indexOf('article') >= 0 : false;
+            const isArticle = from.name
+              ? from.name.indexOf('article') >= 0
+              : false;
             const isRedirect = to.query.redirect;
             if (isArticle && isRedirect) {
               next();
@@ -143,7 +153,9 @@ router.beforeEach((to, from, next) => {
   const token = Cookies.get('user-token') || null;
   const isPublic = to.matched.some(page => page.meta.isPublic);
   const isSignIn = to.matched.some(page => page.path === '/signin');
-  const isPasswordInit = to.matched.some(page => page.path === '/password/init');
+  const isPasswordInit = to.matched.some(
+    page => page.path === '/password/init',
+  );
   const isSignout = to.matched.some(page => page.path === '/signout');
   const notFromSignout = from.matched.some(page => page.path !== '/signout');
 
@@ -165,8 +177,7 @@ router.beforeEach((to, from, next) => {
         return next('/password/init');
       })
       .catch(() => {
-        const query = to.fullPath === '/signout'
-        || to.fullPath === '/password/init'
+        const query = to.fullPath === '/signout' || to.fullPath === '/password/init'
           ? {}
           : { redirect: to.fullPath };
         return next({ path: '/signin', query });
@@ -183,7 +194,8 @@ router.beforeEach((to, from, next) => {
       .then(() => {
         if (Store.state.auth.user.password_reset_flg) return next('/');
         return next('/password/init');
-      }).catch(() => next());
+      })
+      .catch(() => next());
   } else if (!token && notFromSignout && !isSignout) {
     next('/signout');
   } else if (!Store.state.auth.user.password_reset_flg && !isPasswordInit) {
