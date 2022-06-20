@@ -23,7 +23,7 @@ export default {
         const reverseCategories = data.categories.reverse();
         commit('doneGetAllCategories', reverseCategories);
       }).catch((err) => {
-        commit('failrequest', { message: err.message });
+        commit('failRequest', { message: err.message });
       });
     },
   },
