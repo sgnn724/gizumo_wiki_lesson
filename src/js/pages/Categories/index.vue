@@ -31,7 +31,6 @@ export default {
   },
   computed: {
     categories() {
-      console.log(this.$store.state.categories.categoriesList);
       return this.$store.state.categories.categoriesList;
     },
     access() {

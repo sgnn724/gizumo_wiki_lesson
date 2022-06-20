@@ -6,7 +6,6 @@ export default {
     categoriesList: [],
     errorMessage: '',
   },
-  getters: {},
   mutations: {
     doneGetAllCategories(state, payload) {
       state.categoriesList = payload;
