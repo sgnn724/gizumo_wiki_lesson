@@ -2,7 +2,14 @@
   <div class="category__inner">
     <div class="category__post">
       <app-category-post
+        :category="category"
+        :error-message="errorMessage"
+        :done-message="doneMessage"
+        :disabled="disabled"
         :access="access"
+        @updateValue="updateValue"
+        @clearMessage="clearMessage"
+        @handleSubmit="handleSubmit"
       />
     </div>
     <div class="vertical-line" />
@@ -26,6 +33,7 @@ export default {
   },
   data() {
     return {
+      category: '',
       theads: ['カテゴリー名'],
     };
   },
@@ -33,12 +41,41 @@ export default {
     categories() {
       return this.$store.state.categories.categoriesList;
     },
+    errorMessage() {
+      return this.$store.state.categories.errorMessage;
+    },
+    doneMessage() {
+      return this.$store.state.categories.doneMessage;
+    },
+    disabled() {
+      return this.$store.state.categories.loading;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
   },
   created() {
     this.$store.dispatch('categories/getAllCategoriesByDesc');
+  },
+  methods: {
+    updateValue($event) {
+      this.category = $event.target.value;
+    },
+    clearMessage() {
+      this.$store.dispatch('categories/clearMessage');
+    },
+    handleSubmit() {
+      // cannot push button when be loading
+      if (this.disabled) {
+        return;
+      }
+
+      this.$store.dispatch('categories/postCategory', this.category)
+        .then(() => {
+          this.$store.dispatch('categories/getAllCategoriesByDesc');
+          this.category = '';
+        });
+    },
   },
 };
 </script>
