@@ -38,7 +38,7 @@ export default {
     },
     clearMessage(state) {
       state.errorMessage = '';
-      state.doneMesssage = '';
+      state.doneMessage = '';
     },
     toggleLoading(state) {
       state.loading = !state.loading;
