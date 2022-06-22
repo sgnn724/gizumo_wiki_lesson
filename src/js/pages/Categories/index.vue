@@ -17,7 +17,10 @@
       <app-category-list
         :theads="theads"
         :categories="categories"
+        :delete-category-name="deleteCategoryName"
         :access="access"
+        @handleClick="deleteCategory"
+        @openModal="openModal"
       />
     </div>
   </div>
@@ -50,6 +53,12 @@ export default {
     disabled() {
       return this.$store.state.categories.loading;
     },
+    deleteCategoryId() {
+      return this.$store.state.categories.deleteCategoryId;
+    },
+    deleteCategoryName() {
+      return this.$store.state.categories.deleteCategoryName;
+    },
     access() {
       return this.$store.getters['auth/access'];
     },
@@ -75,6 +84,24 @@ export default {
           this.$store.dispatch('categories/getAllCategoriesByDesc');
           this.category = '';
         });
+    },
+    toggleModal() {
+      this.$root.$emit('toggleModal');
+    },
+    openModal(categoryId, categoryName) {
+      this.clearMessage();
+      this.toggleModal();
+      this.$store.dispatch('categories/confirmDeleteCategory', {
+        categoryId,
+        categoryName,
+      });
+    },
+    deleteCategory() {
+      this.$store.dispatch('categories/deleteCategory', this.deleteCategoryId)
+        .then(() => {
+          this.$store.dispatch('categories/getAllCategoriesByDesc');
+        });
+      this.toggleModal();
     },
   },
 };
