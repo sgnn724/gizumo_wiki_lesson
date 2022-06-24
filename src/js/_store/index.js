@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate';
 import {
   auth, categories, articles, users,
 } from './modules';
@@ -13,4 +14,11 @@ export default new Vuex.Store({
     articles,
     users,
   },
+  plugins: [createPersistedState({
+    key: 'categories',
+    paths: [
+      'categories',
+    ],
+    storage: window.sessionStorage,
+  })],
 });

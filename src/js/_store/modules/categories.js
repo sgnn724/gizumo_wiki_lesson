@@ -43,7 +43,8 @@ export default {
     editedCategoryName(state, payload) {
       state.updateCategoryName = payload;
     },
-    doneUpdateCategory(state) {
+    doneUpdateCategory(state, payload) {
+      state.updateCategoryName = payload;
       state.doneMessage = 'カテゴリーの更新が完了しました。';
     },
 
@@ -111,25 +112,24 @@ export default {
       });
     },
 
-    // Update
     setCategoryDetail({ commit }, category) {
       commit('setCategoryDetail', category);
     },
     editedCategoryName({ commit }, categoryName) {
       commit('editedCategoryName', categoryName);
     },
-    updateCategory({ commit, rootGetters, state }, categoryId) {
+    updateCategory({ commit, rootGetters, state }) {
       commit('toggleLoading');
 
-      const data = new URLSearchParams(`id=${categoryId}`);
+      const data = new URLSearchParams(`id=${state.updateCategoryId}`);
       data.append('name', state.updateCategoryName);
 
       axios(rootGetters['auth/token'])({
         method: 'PUT',
-        url: `/category/${categoryId}`,
+        url: `/category/${state.updateCategoryId}`,
         data,
-      }).then(() => {
-        commit('doneUpdateCategory');
+      }).then((res) => {
+        commit('doneUpdateCategory', res.data.category.name);
         commit('toggleLoading');
       }).catch((err) => {
         commit('toggleLoading');

@@ -19,9 +19,6 @@ export default {
     appCategoryUpdate: CategoryUpdate,
   },
   computed: {
-    updateCategoryId() {
-      return this.$store.state.categories.updateCategoryId;
-    },
     updateCategoryName() {
       return this.$store.state.categories.updateCategoryName;
     },
@@ -54,7 +51,7 @@ export default {
     },
     updateCategory() {
       if (this.loading) return;
-      this.$store.dispatch('categories/updateCategory', this.updateCategoryId);
+      this.$store.dispatch('categories/updateCategory');
     },
   },
 };
