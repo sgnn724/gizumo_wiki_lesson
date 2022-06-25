@@ -9,6 +9,7 @@ const getDefaultState = () => ({
   deleteCategoryName: '',
   updateCategoryId: null,
   updateCategoryName: '',
+  targetEditCategory: {},
 });
 
 export default {
@@ -38,14 +39,17 @@ export default {
     },
 
     // Update
-    setCategoryDetail(state, { id, name }) {
-      state.updateCategoryId = id;
-      state.updateCategoryName = name;
+    setCategoryDetail(state, payload) {
+      state.targetEditCategory = payload;
+      state.updateCategoryId = payload.id;
+      state.updateCategoryName = payload.name;
     },
     editedCategoryName(state, payload) {
       state.updateCategoryName = payload;
     },
-    doneUpdateCategory(state) {
+    doneUpdateCategory(state, name) {
+      // state.categoriesList.find(observer => observer.id === id).name = name;
+      state.targetEditCategory.name = name;
       state.doneMessage = 'カテゴリーの更新が完了しました。';
     },
 
@@ -133,9 +137,7 @@ export default {
     editedCategoryName({ commit }, categoryName) {
       commit('editedCategoryName', categoryName);
     },
-    updateCategory({
-      dispatch, commit, rootGetters, state,
-    }) {
+    updateCategory({ commit, rootGetters, state }) {
       commit('toggleLoading');
 
       const data = new URLSearchParams(`id=${state.updateCategoryId}`);
@@ -145,10 +147,9 @@ export default {
         method: 'PUT',
         url: `/category/${state.updateCategoryId}`,
         data,
-      }).then(() => {
-        commit('doneUpdateCategory');
+      }).then((res) => {
+        commit('doneUpdateCategory', res.data.category.name);
         commit('toggleLoading');
-        dispatch('getAllCategoriesByDesc');
       }).catch((err) => {
         commit('toggleLoading');
         commit('failRequest', { message: err.message });
