@@ -1,17 +1,19 @@
 import axios from '@Helpers/axiosDefault';
 
+const getDefaultState = () => ({
+  categoriesList: [],
+  loading: false,
+  errorMessage: '',
+  doneMessage: '',
+  deleteCategoryId: null,
+  deleteCategoryName: '',
+  updateCategoryId: null,
+  updateCategoryName: '',
+});
+
 export default {
   namespaced: true,
-  state: {
-    categoriesList: [],
-    loading: false,
-    errorMessage: '',
-    doneMessage: '',
-    deleteCategoryId: null,
-    deleteCategoryName: '',
-    updateCategoryId: null,
-    updateCategoryName: '',
-  },
+  state: getDefaultState(),
   mutations: {
 
     // Create
@@ -43,8 +45,7 @@ export default {
     editedCategoryName(state, payload) {
       state.updateCategoryName = payload;
     },
-    doneUpdateCategory(state, payload) {
-      state.updateCategoryName = payload;
+    doneUpdateCategory(state) {
       state.doneMessage = 'カテゴリーの更新が完了しました。';
     },
 
@@ -57,6 +58,9 @@ export default {
     },
     toggleLoading(state) {
       state.loading = !state.loading;
+    },
+    resetCategories(state) {
+      Object.assign(state, getDefaultState());
     },
   },
   actions: {
@@ -112,13 +116,26 @@ export default {
       });
     },
 
+    // Update
     setCategoryDetail({ commit }, category) {
       commit('setCategoryDetail', category);
+    },
+    getCategoryDetail({ commit, rootGetters }, categoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then(({ data }) => {
+        commit('setCategoryDetail', data.category);
+      }).catch((err) => {
+        commit('failFetchCategory', { message: err.message });
+      });
     },
     editedCategoryName({ commit }, categoryName) {
       commit('editedCategoryName', categoryName);
     },
-    updateCategory({ commit, rootGetters, state }) {
+    updateCategory({
+      dispatch, commit, rootGetters, state,
+    }) {
       commit('toggleLoading');
 
       const data = new URLSearchParams(`id=${state.updateCategoryId}`);
@@ -128,9 +145,10 @@ export default {
         method: 'PUT',
         url: `/category/${state.updateCategoryId}`,
         data,
-      }).then((res) => {
-        commit('doneUpdateCategory', res.data.category.name);
+      }).then(() => {
+        commit('doneUpdateCategory');
         commit('toggleLoading');
+        dispatch('getAllCategoriesByDesc');
       }).catch((err) => {
         commit('toggleLoading');
         commit('failRequest', { message: err.message });
@@ -139,6 +157,9 @@ export default {
 
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    resetCategories({ commit }) {
+      commit('resetCategories');
     },
   },
 };

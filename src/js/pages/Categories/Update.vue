@@ -13,6 +13,7 @@
 
 <script>
 import { CategoryUpdate } from '@Components/molecules';
+import { isUseLocalStorage } from '@Helpers/webStorage';
 
 export default {
   components: {
@@ -37,6 +38,13 @@ export default {
   },
   created() {
     const { id } = this.$route.params;
+
+    // Not be able to use localStorage
+    if (!isUseLocalStorage) {
+      this.$store.dispatch('categories/getCategoryDetail', id);
+      return;
+    }
+
     const category = this.$store.state.categories.categoriesList
       .find(observer => observer.id === +id);
 
