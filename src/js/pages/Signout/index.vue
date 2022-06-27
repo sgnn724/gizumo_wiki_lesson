@@ -18,6 +18,7 @@ export default {
     },
   },
   created() {
+    this.$store.dispatch('categories/resetCategories');
     this.$store.dispatch('auth/signOut');
   },
 };

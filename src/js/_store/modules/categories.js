@@ -1,15 +1,20 @@
 import axios from '@Helpers/axiosDefault';
 
+const getDefaultState = () => ({
+  categoriesList: [],
+  loading: false,
+  errorMessage: '',
+  doneMessage: '',
+  deleteCategoryId: null,
+  deleteCategoryName: '',
+  updateCategoryId: null,
+  updateCategoryName: '',
+  targetEditCategory: {},
+});
+
 export default {
   namespaced: true,
-  state: {
-    categoriesList: [],
-    loading: false,
-    errorMessage: '',
-    doneMessage: '',
-    deleteCategoryId: null,
-    deleteCategoryName: '',
-  },
+  state: getDefaultState(),
   mutations: {
 
     // Create
@@ -33,6 +38,21 @@ export default {
       state.doneMessage = 'カテゴリーの削除が完了しました。';
     },
 
+    // Update
+    setCategoryDetail(state, payload) {
+      state.targetEditCategory = payload;
+      state.updateCategoryId = payload.id;
+      state.updateCategoryName = payload.name;
+    },
+    editedCategoryName(state, payload) {
+      state.updateCategoryName = payload;
+    },
+    doneUpdateCategory(state, name) {
+      // state.categoriesList.find(observer => observer.id === id).name = name;
+      state.targetEditCategory.name = name;
+      state.doneMessage = 'カテゴリーの更新が完了しました。';
+    },
+
     failRequest(state, { message }) {
       state.errorMessage = message;
     },
@@ -42,6 +62,9 @@ export default {
     },
     toggleLoading(state) {
       state.loading = !state.loading;
+    },
+    resetCategories(state) {
+      Object.assign(state, getDefaultState());
     },
   },
   actions: {
@@ -97,8 +120,47 @@ export default {
       });
     },
 
+    // Update
+    setCategoryDetail({ commit }, category) {
+      commit('setCategoryDetail', category);
+    },
+    getCategoryDetail({ commit, rootGetters }, categoryId) {
+      axios(rootGetters['auth/token'])({
+        method: 'GET',
+        url: `/category/${categoryId}`,
+      }).then(({ data }) => {
+        commit('setCategoryDetail', data.category);
+      }).catch((err) => {
+        commit('failFetchCategory', { message: err.message });
+      });
+    },
+    editedCategoryName({ commit }, categoryName) {
+      commit('editedCategoryName', categoryName);
+    },
+    updateCategory({ commit, rootGetters, state }) {
+      commit('toggleLoading');
+
+      const data = new URLSearchParams(`id=${state.updateCategoryId}`);
+      data.append('name', state.updateCategoryName);
+
+      axios(rootGetters['auth/token'])({
+        method: 'PUT',
+        url: `/category/${state.updateCategoryId}`,
+        data,
+      }).then((res) => {
+        commit('doneUpdateCategory', res.data.category.name);
+        commit('toggleLoading');
+      }).catch((err) => {
+        commit('toggleLoading');
+        commit('failRequest', { message: err.message });
+      });
+    },
+
     clearMessage({ commit }) {
       commit('clearMessage');
+    },
+    resetCategories({ commit }) {
+      commit('resetCategories');
     },
   },
 };
