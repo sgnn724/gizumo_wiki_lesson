@@ -7,6 +7,9 @@ import Signout from '@Pages/Signout';
 import NotFound from '@Pages/NotFound';
 import Home from '@Pages/Home';
 
+// カテゴリー
+import Categories from '@Pages/Categories';
+
 // 記事
 import Articles from '@Pages/Articles';
 import ArticleList from '@Pages/Articles/List';
@@ -66,6 +69,11 @@ const router = new VueRouter({
       name: 'profile',
       path: '/profile',
       component: Profile,
+    },
+    {
+      name: 'categories',
+      path: '/categories',
+      component: Categories,
     },
     {
       path: '/articles',
